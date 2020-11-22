@@ -7,7 +7,7 @@ public class KeyBinder
     /// An easy to use class for a key-binding system in Unity
     /// Supports input filtering (You can choose wich keys are valid for binding)
     ///
-    /// WIKI: 
+    /// WIKI & INFO: https://github.com/JosepeDev/KeyBinder
     /// 
     /// IMPORTANT >>> Call this class's "Update()" on Update() inside a MonoBehaviour
     /// 
