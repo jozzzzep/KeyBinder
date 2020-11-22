@@ -137,7 +137,7 @@ Now you want to let the player choose a key for Jump.
   **InputFilteringRemove (List**<**KeyCode**> **keys)**  
     
     Removes a single/bunch of KeyCodes from the list of valid keys.  
-    You can call it if you wanna add a valid key after the initialization.  
+    You can call it if you wanna remove a valid key after the initialization.  
     
   - **InputFilteringRemoveAll ()**  
   Clears the list of valid keys.  
