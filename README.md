@@ -9,13 +9,15 @@ Supports input filtering (You can choose wich keys are valid for binding).
 
 # Setup
 - Input filtering system
-  - There's a list of "valid keys". You can add keys to it with the methods
+  - There's a **list** of "valid keys". You can add keys to it with these methods:
   ```csharp
   AddValidKey(KeyCode)
   AddValidKeys(KeyCode[])
   AddValidKeys(List<KeyCode>)
   ```
+  - You can also add thek
   - It checks if the key it received is inside a list of "valid keys"
+  
 - Before everything, create and initialize a KeyBinder
 ```csharp
 KeyBinder keyBinder = new KeyBinder();
