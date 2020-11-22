@@ -125,3 +125,15 @@ Now you want to let the player choose a key for Jump.
   Resumes input checking.  
   Use it to resume the checking after you paused it.  
   
+  - **AddValidKey (KeyCode key)**  
+  Adds a single KeyCode to the list of valid keys.  
+  You can call it if you wanna add a valid key after the initialization.  
+  
+  - **AddValidKeys (KeyCode[] keys)**  
+  Adds bunch of KeyCode at once to the list of valid keys.  
+  You can call it if you wanna add a valid key after the initialization.  
+  
+  - **AddValidKeys (List**<**KeyCode**> **keys)**  
+  Adds bunch of KeyCode at once to the list of valid keys.  
+  You can call it if you wanna add a valid key after the initialization.    
+  
