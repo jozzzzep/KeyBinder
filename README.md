@@ -37,8 +37,31 @@ And you check if this KeyCode is pressed, and if it is, your charactar jumps.
 Now you want to let the player choose a key for Jump.
   - Create a method that takes a KeyCode and assigns it to the Jump key.
   - Now create a Bind method, that'll start checking for the player input.
+ 
   ```csharp
+  KeyBinder keyBinder = new KeyBinder();
+  KeyCode jumpKey;
   
+  // binds a given KeyCode to the Jump Key
+  void BindToJump(KeyCode key)
+  {
+    jumpKey = key;
+  }
+  
+  // when called, it'll assign the next pressed key to the jumpKey variable
+  void CheckForInput()
+  {
+    keyBinder.InputCheckingBeginSingle(BindToJump);
+  }
+  
+  void Update()
+  {
+    keyBinder.Update();
+    if (Input.GetKeyDown(jumpKey)
+    {
+      Jump();
+    }
+  }
   ```
 
 # Input Filtering System
@@ -91,6 +114,10 @@ Now you want to let the player choose a key for Jump.
 ### Properties
   - **LatestKey**  
   Returns the latest key the KeyBinder received.  
+  
+  - **ValidKeys**  
+  Returns the list of the valid keys as an array.  
+  Returns null if list has 0 items.  
   
   - **IsActive**  
   Determines if the KeyBinder is currently checking for input.
