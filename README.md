@@ -110,8 +110,18 @@ Now you want to let the player choose a key for Jump.
   
   - **InputCheckingBeginContinuous (Action**<**KeyCode**> **methodToActive)**  
   Enter a method with one parameter of type KeyCode as a parameter.  
-  Checks for the next pressed key, then calls the method you entered until you cancel the input checking. 
+  Checks for the next pressed key, then calls the method you entered each time the user press a key until you cancel the input checking. 
   
   - **InputCheckingCancel ()**  
-  Resets and turns off input checking.
-  Use this to turn of the Continuous input checking
+  Resets and turns off input checking.  
+  Use this to turn off the Continuous input checking.  
+  
+  - **InputCheckingPause ()**  
+  Pauses input checking.  
+  If you want to not check for input under a certain condition, you can.  
+  Call this method, it'll keep the current checking data but will pause the checking until it resumed.  
+  
+  - **InputCheckingResume ()**  
+  Resumes input checking.  
+  Use it to resume the checking after you paused it.  
+  
