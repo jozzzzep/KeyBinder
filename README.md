@@ -2,10 +2,10 @@
 An easy to use, all-in-one class for a key-binding in Unity.  
 Supports input filtering (You can choose wich keys are valid for binding).
 #### Content
-  - [Setup](#setup)
-  - [Examples](#examples)
-  - [Input Filtering System](#input-filtering-system)
-  - [Documentations](#documentations)
+  - **[Setup](#setup)**
+  - **[Examples](#examples)**
+  - **[Input Filtering System](#input-filtering-system)**
+  - **[Documentations](#documentations)**
       - [Properties](#properties)
       - [Constructors](#constructors)
       - [Methods](#methods)
@@ -70,28 +70,6 @@ Now you want to let the player choose a key for Jump.
     KeyCode.G, KeyCode.H, KeyCode.I
   }
   ```
-
-## Properties
-```csharp
-LatestKey              // Returns the latest key the KeyBinder received.
-IsActive               // Determines if the KeyBinder is currently checking for input.
-InputFilteringActive   // Determines if the KeyBinder will filter the input
-```
-
-## Methods
-```csharp
-Update() // Call this on Update() inside a MonoBehaviour
-
-InputCheckingBeginSingle()
-InputCheckingBeginContinuous()
-InputCheckingCancel()
-InputCheckingPause()
-InputCheckingResume()
-
-AddValidKey()
-AddValidKeys()
-ClearValidKeys()
-```
 
 # Documentations
 ### Properties
