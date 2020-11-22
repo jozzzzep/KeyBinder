@@ -10,10 +10,32 @@ Supports input filtering (You can choose wich keys are valid for binding).
 
 # Setup
   
-- Before everything, create and initialize a KeyBinder
+- First, create and initialize a KeyBinder.  
+See [here](#input-filtering-system) about the input filtering system.  
+Make sure you are using this class inside a MonoBehaviour
 ```csharp
-KeyBinder keyBinder = new KeyBinder();
+KeyBinder keyBinder = new KeyBinder(); // A KeyBinder without input filtering
 ```
+- Now, the most **IMPORTANT** thing:  
+call the "Update()" method of the KeyBinder inside the Update() method of your MonoBehaviour
+```csharp
+private void Update()
+{
+  keyBinder.Update();
+}
+```
+- Done. You're all set and can use the KeyBinder tool.
+- See examples of use [here]()
+
+# Examples
+Do what the [Setup](#setup) section says first if you want these examples to work
+- Let's say you have a KeyCode variable for the Jump action in your game.  
+And you check if this KeyCode is pressed, and if it is, your charactar jumps.  
+Now you want to let the player choose a key for Jump.
+  - Create a method that takes a KeyCode and assigns it to the Jump key.
+  ```csharp
+  
+  ```
 
 # Input Filtering System
   - There's a **list** of "valid keys" inside a **KeyBinder** object
@@ -35,6 +57,14 @@ KeyBinder keyBinder = new KeyBinder();
   
   // Adds the key from the list you entered to the "valid keys list"
   KeyBinder keyBinder = new KeyBinder(List<KeyCode>); 
+  ```
+  - Array of keys example:
+  ```csharp
+  KeyCode[] keysArray =
+  {
+    KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F,
+    KeyCode.G, KeyCode.H, KeyCode.I
+  }
   ```
 
 ## Properties
