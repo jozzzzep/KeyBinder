@@ -1,11 +1,14 @@
 # KeyBinder
-An easy to use, all-in-one class for a key-binding system in Unity.  
+An easy to use, all-in-one class for a key-binding in Unity.  
 Supports input filtering (You can choose wich keys are valid for binding).
-- **Content**
+#### Content
   - [Setup](#setup)
+  - [Examples](#examples)
   - [Input Filtering System](#input-filtering-system)
-  - [Properties](#properties)
-  - [Methods](#methods)
+  - [Documentations](#documentations)
+      - [Properties](#properties)
+      - [Constructors](#constructors)
+      - [Methods](#methods)
 
 
 # Setup
@@ -25,7 +28,7 @@ private void Update()
 }
 ```
 - Done. You're all set and can use the KeyBinder tool.
-- See examples of use [here]()
+- See examples of use [here](#examples)
 
 # Examples
 Do what the [Setup](#setup) section says first if you want these examples to work
@@ -33,6 +36,7 @@ Do what the [Setup](#setup) section says first if you want these examples to wor
 And you check if this KeyCode is pressed, and if it is, your charactar jumps.  
 Now you want to let the player choose a key for Jump.
   - Create a method that takes a KeyCode and assigns it to the Jump key.
+  - Now create a Bind method, that'll start checking for the player input.
   ```csharp
   
   ```
@@ -69,9 +73,9 @@ Now you want to let the player choose a key for Jump.
 
 ## Properties
 ```csharp
-LatestKey            // Returns the latest key the KeyBinder received.
-IsActive             // Determines if the KeyBinder is currently checking for input.
-KeyFilteringActive   // Determines if the KeyBinder will filter the input
+LatestKey              // Returns the latest key the KeyBinder received.
+IsActive               // Determines if the KeyBinder is currently checking for input.
+InputFilteringActive   // Determines if the KeyBinder will filter the input
 ```
 
 ## Methods
@@ -88,3 +92,26 @@ AddValidKey()
 AddValidKeys()
 ClearValidKeys()
 ```
+
+# Documentations
+### Properties
+  - **LatestKey**  
+  Returns the latest key the KeyBinder received.  
+  
+  - **IsActive**  
+  Determines if the KeyBinder is currently checking for input.
+  - **InputFilteringActive**  
+  Determines if the KeyBinder will filter the input.  
+  The Filtering is active if you added at least one key.
+  
+### Constructors
+  - **KeyBinder()**  
+  No parameters enered.  
+  Will create the KeyBinder with no valid keys (all keys are valid)  
+  You can add valid keys later with methods.  
+  - **KeyBinder(KeyCode[] validKeys)**  
+  No parameters enered.  
+  Will create the KeyBinder with no valid keys (all keys are valid)  
+  You can add valid keys later with methods. 
+### Methods
+  - **Update()** - Call this method insid 
