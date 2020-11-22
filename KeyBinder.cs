@@ -21,7 +21,7 @@ public class KeyBinder
     /// - Update ()
     /// - InputCheckingBeginSingle (Action<KeyCode>)
     /// - InputCheckingBeginContinuous (Action<KeyCode>)
-    /// - InputCheckingCancel ()
+    /// - InputCheckingStop ()
     /// - InputCheckingPause ()
     /// - InputCheckingResume ()
     /// - InputFilteringAdd (KeyCode key)
@@ -149,7 +149,7 @@ public class KeyBinder
     /// <summary>
     /// Resets and turns off input checking.
     /// </summary>
-    public void InputCheckingCancel()
+    public void InputCheckingStop()
     {
         onKeyInput = null;
         SetInputChecking(false);
