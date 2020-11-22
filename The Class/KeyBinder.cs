@@ -14,7 +14,7 @@ public class KeyBinder
     /// Properties:
     /// - LatestKey
     /// - IsActive
-    /// - KeyFilteringActive
+    /// - InputFilteringActive
     /// 
     /// Methods:
     /// - Update()
@@ -51,7 +51,7 @@ public class KeyBinder
     /// <para> To add keys to the filtering:
     /// <see cref="AddValidKey(KeyCode)"/>, <see cref="AddValidKeys(KeyCode[])"/></para>
     /// </summary>
-    public bool KeyFilteringActive
+    public bool InputFilteringActive
     {
         get => validKeys.Count >= 1;
     }
