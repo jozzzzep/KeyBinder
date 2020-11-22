@@ -3,15 +3,22 @@ An easy to use, all-in-one class for a key-binding system in Unity.
 Supports input filtering (You can choose wich keys are valid for binding).
 - **Content**
   - [Setup](#setup)
+  - [Input Filtering System](#input-filtering-system)
   - [Properties](#properties)
   - [Methods](#methods)
 
 
 # Setup
-- Input filtering system
+  
+- Before everything, create and initialize a KeyBinder
+```csharp
+KeyBinder keyBinder = new KeyBinder();
+```
+
+# Input Filtering System
   - There's a **list** of "valid keys" inside a **KeyBinder** object
   - If the **list's empty**, the input filtering will **not work** (Every key the user will press will be valid)
-  - It'll return the received key **only if** it is **inside that list**
+  - If the filtering's is **working** it'll return the received key **only if** it is **inside that list**
   - You can **add keys** to the list with these methods:
   ```csharp
   AddValidKey(KeyCode)
@@ -29,11 +36,6 @@ Supports input filtering (You can choose wich keys are valid for binding).
   // Adds the key from the list you entered to the "valid keys list"
   KeyBinder keyBinder = new KeyBinder(List<KeyCode>); 
   ```
-  
-- Before everything, create and initialize a KeyBinder
-```csharp
-KeyBinder keyBinder = new KeyBinder();
-```
 
 ## Properties
 ```csharp
