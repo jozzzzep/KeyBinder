@@ -137,3 +137,8 @@ Now you want to let the player choose a key for Jump.
   Adds bunch of KeyCode at once to the list of valid keys.  
   You can call it if you wanna add a valid key after the initialization.    
   
+  - **ClearValidKeys ()**  
+  Clears the list of valid keys. 
+  Makes it empty (makes every key valid and disables input filtering).  
+  There's no need to use that if input filtering is already disabled.  
+  You can call the property InputFilteringActive for checking if it's enabled.  
