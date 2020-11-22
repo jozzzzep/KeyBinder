@@ -1,6 +1,6 @@
 # KeyBinder
-An easy to use, all-in-one class for a key-binding in Unity.  
-Supports input filtering (You can choose wich keys are valid for binding).
+An easy to use all-in-one class for a key-binding in Unity.  
+Supports input filtering (You can choose which keys are valid for binding).
 #### Content
   - **[Setup](#setup)**
   - **[Examples](#examples)**
@@ -33,7 +33,7 @@ private void Update()
 # Examples
 Do what the [Setup](#setup) section says first if you want these examples to work
 - Let's say you have a KeyCode variable for the Jump action in your game.  
-And you check if this KeyCode is pressed, and if it is, your charactar jumps.  
+And you check if this KeyCode is pressed, and if it is, your character jumps.  
 Now you want to let the player choose a key for Jump.
   - Create a method that takes a KeyCode and assigns it to the Jump key.
   - Now create a Bind method, that'll start checking for the player input.
@@ -102,7 +102,7 @@ Now you want to let the player choose a key for Jump.
 # Input Filtering System
   - There's a **list** of "valid keys" inside a **KeyBinder** object
   - If the **list's empty**, the input filtering will **not work** (Every key the user will press will be valid)
-  - If the filtering's is **working** it'll return the received key **only if** it is **inside that list**
+  - If the filtering is **working** it'll return the received key **only if** it is **inside that list**
   - You can **add keys** or **remove keys** from the list with these methods:
   ```csharp
   InputFilteringAdd (KeyCode)
@@ -146,12 +146,12 @@ Now you want to let the player choose a key for Jump.
   - **KeyBinder (KeyCode[] validKeys)**  
   Enter an array of KeyCodes you choose to be valid for binding.  
   Will create the KeyBinder and add all the KeyCodes from your array to the list of valid keys.  
-  You can add valid keys any time. 
+  You can add valid keys at any time. 
   
   - **KeyBinder (List**<**KeyCode**> **validKeys)**  
   Enter a list of KeyCodes you choose to be valid for binding.  
-  Will create the KeyBinder and add all the KeyCodes from the list you given, to the list of valid keys.  
-  You can add valid keys any time. 
+  Will create the KeyBinder and add all the KeyCodes from the list you are given, to the list of valid keys.  
+  You can add valid keys at any time. 
   
 ### Properties
   - **LatestKey**  
@@ -159,7 +159,7 @@ Now you want to let the player choose a key for Jump.
   
   - **ValidKeys**  
   Returns the list of the valid keys as an array.  
-  Returns null if list has 0 items.  
+  Returns null if the list has 0 items.  
   
   - **IsActive**  
   Determines if the KeyBinder is currently checking for input.
@@ -175,7 +175,7 @@ Now you want to let the player choose a key for Jump.
   
   - **InputCheckingBeginSingle (Action**<**KeyCode**> **methodToActive)**  
   Enter a method with one parameter of type KeyCode as a parameter.  
-  Checks for the next pressed key, then calls the method you entered, inputing the pressed key, and stops checking.  
+  Checks for the next pressed key, then calls the method you entered, inputting the pressed key, and stops checking.  
   
   - **InputCheckingBeginContinuous (Action**<**KeyCode**> **methodToActive)**  
   Enter a method with one parameter of type KeyCode as a parameter.  
