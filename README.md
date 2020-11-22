@@ -49,7 +49,7 @@ Now you want to let the player choose a key for Jump.
   ```csharp
   AddValidKey(KeyCode)
   AddValidKeys(KeyCode[])
-  AddValidKeys(List<KeyCoNde>)
+  AddValidKeys(List<KeyCode>)
   ```
   - You can also add them upon **initialization** with **constructors**
   ```csharp
@@ -87,9 +87,16 @@ Now you want to let the player choose a key for Jump.
   No parameters enered.  
   Will create the KeyBinder with no valid keys (all keys are valid)  
   You can add valid keys later with methods.  
+  
   - **KeyBinder(KeyCode[] validKeys)**  
-  No parameters enered.  
-  Will create the KeyBinder with no valid keys (all keys are valid)  
-  You can add valid keys later with methods. 
+  Array of KeyCodes you chose to be valid for binding.  
+  Will create the KeyBinder and add all the KeyCodes from your array to the list of valid keys.  
+  You can add valid keys any time. 
+  
+  - **KeyBinder(List**<**KeyCode**> **validKeys)**  
+  List of KeyCodes you chose to be valid for binding.  
+  Will create the KeyBinder and add all the KeyCodes from the list you given, to the list of valid keys.  
+  You can add valid keys any time. 
+  
 ### Methods
   - **Update()** - Call this method insid 
