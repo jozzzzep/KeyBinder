@@ -13,19 +13,48 @@ public class KeyBinder
     /// 
     /// Properties:
     /// - LatestKey
+    /// - ValidKeys
     /// - IsActive
     /// - InputFilteringActive
     /// 
     /// Methods:
-    /// - Update()
-    /// - InputCheckingBeginSingle()
-    /// - InputCheckingBeginContinuous()
-    /// - InputCheckingCancel()
-    /// - InputCheckingPause()
-    /// - InputCheckingResume()
-    /// - AddValidKey()
-    /// - AddValidKeys()
-    /// - ClearValidKeys()
+    /// - Update ()
+    /// - InputCheckingBeginSingle (Action<KeyCode>)
+    /// - InputCheckingBeginContinuous (Action<KeyCode>)
+    /// - InputCheckingCancel ()
+    /// - InputCheckingPause ()
+    /// - InputCheckingResume ()
+    /// - InputFilteringAdd (KeyCode key)
+    /// - InputFilteringAdd (KeyCode[] keys)
+    /// - InputFilteringAdd (List<KeyCode> keys)
+    /// - InputFilteringRemove (KeyCode key)
+    /// - InputFilteringRemove (KeyCode[] keys)
+    /// - InputFilteringRemove (List<KeyCode> keys)
+    /// - InputFilteringRemoveAll ()
+
+    #region Constructors
+
+    /// <summary>
+    /// To initialize the <see cref="KeyBinder"/> class while adding valid keys for input filtering.
+    /// </summary>
+    public KeyBinder(KeyCode[] validKeys)
+    {
+        if (validKeys != null)
+            InputFilteringAdd(validKeys);
+    }
+
+    /// <summary>
+    /// To initialize the <see cref="KeyBinder"/> class while adding valid keys for input filtering.
+    /// </summary>
+    public KeyBinder(List<KeyCode> _validKeys)
+        : this(_validKeys.ToArray()) { }
+
+    /// <summary>
+    /// To initialize the <see cref="KeyBinder"/> class without input filtering. (can be added later)
+    /// </summary>
+    public KeyBinder() { }
+
+    #endregion
 
     #region Variables & Properties
 
@@ -35,6 +64,15 @@ public class KeyBinder
     public KeyCode LatestKey
     {
         get => _latestKey;
+    }
+
+    /// <summary>
+    /// <para> Returns the list of the valid keys as an array. </para>
+    /// <para> Returns <see cref="null"/> if list has 0 items </para>
+    /// </summary>
+    public KeyCode[] ValidKeys
+    {
+        get => (_validKeys.Count >= 1) ? _validKeys.ToArray() : null;
     }
 
     /// <summary>
@@ -49,43 +87,19 @@ public class KeyBinder
     /// <para> Determines if the <see cref="KeyBinder"/> will filter the input. </para>
     /// <para> The Filtering is active if you added at least one key </para>
     /// <para> To add keys to the filtering:
-    /// <see cref="AddValidKey(KeyCode)"/>, <see cref="AddValidKeys(KeyCode[])"/></para>
+    /// <see cref="InputFilteringAdd(KeyCode)"/>, <see cref="InputFilteringAdd(KeyCode[])"/></para>
     /// </summary>
     public bool InputFilteringActive
     {
-        get => validKeys.Count >= 1;
+        get => _validKeys.Count >= 1;
     }
 
     // private variables
     bool continuous;
     bool _isActive;
     Action<KeyCode> onKeyInput;
-    List<KeyCode> validKeys = new List<KeyCode>();
+    List<KeyCode> _validKeys = new List<KeyCode>();
     KeyCode _latestKey;
-
-    #endregion
-
-    #region Constructors
-
-    /// <summary>
-    /// To initialize the <see cref="KeyBinder"/> class while adding valid keys for input filtering.
-    /// </summary>
-    public KeyBinder(KeyCode[] _validKeys)
-    {
-        if (_validKeys != null)
-            AddValidKeys(_validKeys);
-    }
-
-    /// <summary>
-    /// To initialize the <see cref="KeyBinder"/> class while adding valid keys for input filtering.
-    /// </summary>
-    public KeyBinder(List<KeyCode> _validKeys)
-        : this(_validKeys.ToArray()) { }
-
-    /// <summary>
-    /// To initialize the <see cref="KeyBinder"/> class without input filtering. (can be added later)
-    /// </summary>
-    public KeyBinder() { }
 
     #endregion
 
@@ -159,20 +173,20 @@ public class KeyBinder
     /// If you want to add a key for the input filering list.
     /// </summary>
     /// <param name="key">The key you want to add</param>
-    public void AddValidKey(KeyCode key)
+    public void InputFilteringAdd(KeyCode key)
     {
-        validKeys.Add(key);
+        _validKeys.Add(key);
     }
 
     /// <summary>
     /// If you want to add multiple keys for the input filering list.
     /// </summary>
     /// <param name="keys">Array with the keys you want to add</param>
-    public void AddValidKeys(KeyCode[] keys)
+    public void InputFilteringAdd(KeyCode[] keys)
     {
         for (int i = 0; i < keys.Length; i++)
         {
-            AddValidKey(keys[i]);
+            InputFilteringAdd(keys[i]);
         }
     }
 
@@ -180,15 +194,49 @@ public class KeyBinder
     /// If you want to add multiple keys for the input filering list.
     /// </summary>
     /// <param name="keys">A list with the keys you want to add</param>
-    public void AddValidKeys(List<KeyCode> keys)
+    public void InputFilteringAdd(List<KeyCode> keys)
     {
-        AddValidKeys(keys.ToArray());
+        InputFilteringAdd(keys.ToArray());
+    }
+
+    /// <summary>
+    /// Removes a certain KeyCode from the list of valid keys.
+    /// </summary>
+    /// <param name="key">A key you want to remove from the list of valid keys.</param>
+    public void InputFilteringRemove(KeyCode key)
+    {
+        if (!InputFilteringActive) return;
+        if (_validKeys.Contains(key))
+        {
+            _validKeys.Remove(key);
+        }
+    }
+
+    /// <summary>
+    /// Removes a bunch of KeyCode from the list of valid keys.
+    /// </summary>
+    /// <param name="key">An array of keys you want to remove from the list of valid keys.</param>
+    public void InputFilteringRemove(KeyCode[] keys)
+    {
+        for (int i = 0; i < keys.Length; i++)
+        {
+            InputFilteringRemove(keys[i]);
+        }
+    }
+
+    /// <summary>
+    /// Removes a bunch of KeyCode from the list of valid keys.
+    /// </summary>
+    /// <param name="key">A list of keys you want to remove from the list of valid keys.</param>
+    public void InputFilteringRemove(List<KeyCode> keys)
+    {
+        InputFilteringRemove(keys.ToArray());
     }
 
     /// <summary>
     /// Clears the list of valid keys and turns of input filtering
     /// </summary>
-    public void ClearValidKeys() => validKeys.Clear();
+    public void InputFilteringRemoveAll() => _validKeys.Clear();
 
     // Returns the KeyCode of the current pressed key
     KeyCode GetPressedKey()
@@ -234,16 +282,16 @@ public class KeyBinder
     // Checks if the key is in the "valid keys" list (input filtering)
     bool IsKeyValid(KeyCode keyCode)
     {
-        if (validKeys == null || validKeys.Count <= 0)
+        if (InputFilteringActive)
         {
             return true;
         }
         else
         {
             bool returnThis = false;
-            for (int i = 0; i < validKeys.Count; i++)
+            for (int i = 0; i < _validKeys.Count; i++)
             {
-                if (validKeys[i] == keyCode)
+                if (_validKeys[i] == keyCode)
                 {
                     returnThis = true;
                     continue;
