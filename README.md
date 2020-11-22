@@ -68,11 +68,15 @@ Now you want to let the player choose a key for Jump.
   - There's a **list** of "valid keys" inside a **KeyBinder** object
   - If the **list's empty**, the input filtering will **not work** (Every key the user will press will be valid)
   - If the filtering's is **working** it'll return the received key **only if** it is **inside that list**
-  - You can **add keys** to the list with these methods:
+  - You can **add keys** or **remove keys** from the list with these methods:
   ```csharp
-  AddValidKey(KeyCode)
-  AddValidKeys(KeyCode[])
-  AddValidKeys(List<KeyCode>)
+  InputFilteringAdd (KeyCode)
+  InputFilteringAdd (KeyCode[])
+  InputFilteringAdd (List<KeyCode>)
+  
+  InputFilteringRemove (KeyCode)
+  InputFilteringRemove (KeyCode[])
+  InputFilteringRemove (List<KeyCode>)
   ```
   - You can also add them upon **initialization** with **constructors**
   ```csharp
@@ -92,6 +96,7 @@ Now you want to let the player choose a key for Jump.
     KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F,
     KeyCode.G, KeyCode.H, KeyCode.I
   }
+  KeyBinder keyBinder = new KeyBinder(keysArray); // initialized with input filtering
   ```
 
 # Documentations
