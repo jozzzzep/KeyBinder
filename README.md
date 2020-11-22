@@ -37,19 +37,83 @@ And you check if this KeyCode is pressed, and if it is, your charactar jumps.
 Now you want to let the player choose a key for Jump.
   - Create a method that takes a KeyCode and assigns it to the Jump key.
   - Now create a Bind method, that'll start checking for the player input.
+ 
   ```csharp
+  KeyBinder keyBinder = new KeyBinder();
+  KeyCode jumpKey;
   
+  // binds a given KeyCode to the Jump Key
+  void BindToJump(KeyCode key)
+  {
+    jumpKey = key;
+  }
+  
+  // when called, it'll assign the next pressed key to the jumpKey variable
+  void CheckForInput()
+  {
+    keyBinder.InputCheckingBeginSingle(BindToJump);
+  }
+  
+  void Update()
+  {
+    keyBinder.Update();
+    if (Input.GetKeyDown(jumpKey)
+    {
+      Jump();
+    }
+  }
+  ```
+- Let's say you want every time the player presses a button, to display its name.
+  - Create a variable for the text component.
+  - Create a method that takes a KeyCode and prints it to the text component.
+  - Create a method that should start checking for input.
+  - Create a method that should stop checking for input.
+  ```csharp
+  KeyBinder keyBinder = new KeyBinder();
+  Text textComponent;
+  
+  // displays the name of a given KeyCode the text component
+  void ShowKeyOnScreen(KeyCode key)
+  {
+    textComponent.text = key.ToString();
+  }
+  
+  // when called, it'll start checking for input
+  void StartCheckForInput()
+  {
+    // It'll endlessly call the method "ShowKeyOnScreen" every time the player presses a key.
+    // To stop it, you should call the method InputCheckingStop inside the KeyBinder
+    
+    keyBinder.InputCheckingBeginContinuous(ShowKeyOnScreen);
+  }
+  
+  // when called, it'll stop checking for input
+  void StopCheckingForInput()
+  {
+    keyBinder.InputCheckingStop();
+  }
+  
+  void Update()
+  {
+    keyBinder.Update();
+  }
   ```
 
 # Input Filtering System
   - There's a **list** of "valid keys" inside a **KeyBinder** object
   - If the **list's empty**, the input filtering will **not work** (Every key the user will press will be valid)
   - If the filtering's is **working** it'll return the received key **only if** it is **inside that list**
-  - You can **add keys** to the list with these methods:
+  - You can **add keys** or **remove keys** from the list with these methods:
   ```csharp
-  AddValidKey(KeyCode)
-  AddValidKeys(KeyCode[])
-  AddValidKeys(List<KeyCode>)
+  InputFilteringAdd (KeyCode)
+  InputFilteringAdd (KeyCode[])
+  InputFilteringAdd (List<KeyCode>)
+  
+  InputFilteringRemove (KeyCode)
+  InputFilteringRemove (KeyCode[])
+  InputFilteringRemove (List<KeyCode>)
+  
+  InputFilteringRemoveAll()
   ```
   - You can also add them upon **initialization** with **constructors**
   ```csharp
@@ -69,6 +133,7 @@ Now you want to let the player choose a key for Jump.
     KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F,
     KeyCode.G, KeyCode.H, KeyCode.I
   }
+  KeyBinder keyBinder = new KeyBinder(keysArray); // initialized with input filtering
   ```
 
 # Documentations
@@ -92,6 +157,10 @@ Now you want to let the player choose a key for Jump.
   - **LatestKey**  
   Returns the latest key the KeyBinder received.  
   
+  - **ValidKeys**  
+  Returns the list of the valid keys as an array.  
+  Returns null if list has 0 items.  
+  
   - **IsActive**  
   Determines if the KeyBinder is currently checking for input.
   
@@ -112,7 +181,7 @@ Now you want to let the player choose a key for Jump.
   Enter a method with one parameter of type KeyCode as a parameter.  
   Checks for the next pressed key, then calls the method you entered each time the user press a key until you cancel the input checking. 
   
-  - **InputCheckingCancel ()**  
+  - **InputCheckingStop ()**  
   Resets and turns off input checking.  
   Use this to turn off the Continuous input checking.  
   
