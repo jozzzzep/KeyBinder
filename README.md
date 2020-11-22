@@ -78,6 +78,7 @@ Now you want to let the player choose a key for Jump.
   
   - **IsActive**  
   Determines if the KeyBinder is currently checking for input.
+  
   - **InputFilteringActive**  
   Determines if the KeyBinder will filter the input.  
   The Filtering is active if you added at least one key.
@@ -89,14 +90,20 @@ Now you want to let the player choose a key for Jump.
   You can add valid keys later with methods.  
   
   - **KeyBinder(KeyCode[] validKeys)**  
-  Array of KeyCodes you chose to be valid for binding.  
+  Enter an array of KeyCodes you choose to be valid for binding.  
   Will create the KeyBinder and add all the KeyCodes from your array to the list of valid keys.  
   You can add valid keys any time. 
   
   - **KeyBinder(List**<**KeyCode**> **validKeys)**  
-  List of KeyCodes you chose to be valid for binding.  
+  Enter a list of KeyCodes you choose to be valid for binding.  
   Will create the KeyBinder and add all the KeyCodes from the list you given, to the list of valid keys.  
   You can add valid keys any time. 
   
 ### Methods
-  - **Update()** - Call this method insid 
+  - **Update()**  
+  Call this method on Update() inside a MonoBehaviour inherited class.
+  
+  - **InputCheckingBeginSingle(Action**<**KeyCode**> **methodToActive)**  
+  Enter a method with one parameter of type KeyCode as a parameter.  
+  Checks for the next pressed key, then calls the method you entered, inputing the pressed key, and stops checking.  
+  
