@@ -63,6 +63,41 @@ Now you want to let the player choose a key for Jump.
     }
   }
   ```
+- Let's say you want every time the player presses a button, to display its name.
+  - Create a variable for the text component.
+  - Create a method that takes a KeyCode and prints it to the text component.
+  - Create a method that should start checking for input.
+  - Create a method that should stop checking for input.
+  ```csharp
+  KeyBinder keyBinder = new KeyBinder();
+  Text textComponent;
+  
+  // displays the name of a given KeyCode the text component
+  void ShowKeyOnScreen(KeyCode key)
+  {
+    textComponent.text = key.ToString();
+  }
+  
+  // when called, it'll start checking for input
+  void StartCheckForInput()
+  {
+    // It'll endlessly call the method "ShowKeyOnScreen" every time the player presses a key.
+    // To stop it, you should call the method InputCheckingStop inside the KeyBinder
+    
+    keyBinder.InputCheckingBeginContinuous(ShowKeyOnScreen);
+  }
+  
+  // when called, it'll stop checking for input
+  void StopCheckingForInput()
+  {
+    keyBinder.InputCheckingStop();
+  }
+  
+  void Update()
+  {
+    keyBinder.Update();
+  }
+  ```
 
 # Input Filtering System
   - There's a **list** of "valid keys" inside a **KeyBinder** object
@@ -146,7 +181,7 @@ Now you want to let the player choose a key for Jump.
   Enter a method with one parameter of type KeyCode as a parameter.  
   Checks for the next pressed key, then calls the method you entered each time the user press a key until you cancel the input checking. 
   
-  - **InputCheckingCancel ()**  
+  - **InputCheckingStop ()**  
   Resets and turns off input checking.  
   Use this to turn off the Continuous input checking.  
   
