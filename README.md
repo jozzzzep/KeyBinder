@@ -1,13 +1,23 @@
 # KeyBinder
 An easy to use, all-in-one class for a key-binding system in Unity.  
 Supports input filtering (You can choose wich keys are valid for binding).
-[link](#methods)
+- **Content:**
+  - [Setup](#setup)
+  - [Properties](#properties)
+  - [Methods](#methods)
 
 
 # Setup
 - Before everything, create and initialize a KeyBinder
 ```csharp
 KeyBinder keyBinder = new KeyBinder();
+```
+
+## Properties
+```csharp
+LatestKey            // Returns the latest key the KeyBinder received.
+IsActive             // Determines if the KeyBinder is currently checking for input.
+KeyFilteringActive   // Determines if the KeyBinder will filter the input
 ```
 
 ## Methods
