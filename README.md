@@ -77,6 +77,8 @@ Now you want to let the player choose a key for Jump.
   InputFilteringRemove (KeyCode)
   InputFilteringRemove (KeyCode[])
   InputFilteringRemove (List<KeyCode>)
+  
+  InputFilteringRemoveAll()
   ```
   - You can also add them upon **initialization** with **constructors**
   ```csharp
