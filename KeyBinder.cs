@@ -14,7 +14,7 @@ public class KeyBinder
     /// Properties:
     /// - LatestKey
     /// - IsActive
-    /// - KeyFilteringActive
+    /// - InputFilteringActive
     /// 
     /// Methods:
     /// - Update()
@@ -51,7 +51,7 @@ public class KeyBinder
     /// <para> To add keys to the filtering:
     /// <see cref="AddValidKey(KeyCode)"/>, <see cref="AddValidKeys(KeyCode[])"/></para>
     /// </summary>
-    public bool KeyFilteringActive
+    public bool InputFilteringActive
     {
         get => validKeys.Count >= 1;
     }
@@ -90,6 +90,23 @@ public class KeyBinder
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// IMPORTANT >>> Run this inside Update() in a <see cref="MonoBehaviour"/>
+    /// </summary>
+    public void Update()
+    {
+        // if the input checking is active
+        // it checks for input
+        // when a key is pressed it calls ReceiveInput().
+        if (_isActive)
+        {
+            if (Input.anyKey)
+            {
+                ReceiveInput();
+            }
+        }
+    }
 
     /// <summary>
     /// <para> Checks for the next pressed key, then calls the method you entered and stops checking. </para>
@@ -137,23 +154,6 @@ public class KeyBinder
     /// <para> Call this to resume input checking after you paused it with <see cref="InputCheckingPause()"/>. </para>
     /// </summary>
     public void InputCheckingResume() => SetInputChecking(true);
-
-    /// <summary>
-    /// IMPORTANT >>> Run this inside Update() in a <see cref="MonoBehaviour"/>
-    /// </summary>
-    public void Update()
-    {
-        // if the input checking is active
-        // it checks for input
-        // when a key is pressed it calls ReceiveInput().
-        if (_isActive)
-        {
-            if (Input.anyKey)
-            {
-                ReceiveInput();
-            }
-        }
-    }
 
     /// <summary>
     /// If you want to add a key for the input filering list.
