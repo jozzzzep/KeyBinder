@@ -72,6 +72,22 @@ Now you want to let the player choose a key for Jump.
   ```
 
 # Documentations
+### Constructors
+  - **KeyBinder ()**  
+  No parameters enered.  
+  Will create the KeyBinder with no valid keys (all keys are valid)  
+  You can add valid keys later with methods.  
+  
+  - **KeyBinder (KeyCode[] validKeys)**  
+  Enter an array of KeyCodes you choose to be valid for binding.  
+  Will create the KeyBinder and add all the KeyCodes from your array to the list of valid keys.  
+  You can add valid keys any time. 
+  
+  - **KeyBinder (List**<**KeyCode**> **validKeys)**  
+  Enter a list of KeyCodes you choose to be valid for binding.  
+  Will create the KeyBinder and add all the KeyCodes from the list you given, to the list of valid keys.  
+  You can add valid keys any time. 
+  
 ### Properties
   - **LatestKey**  
   Returns the latest key the KeyBinder received.  
@@ -83,27 +99,19 @@ Now you want to let the player choose a key for Jump.
   Determines if the KeyBinder will filter the input.  
   The Filtering is active if you added at least one key.
   
-### Constructors
-  - **KeyBinder()**  
-  No parameters enered.  
-  Will create the KeyBinder with no valid keys (all keys are valid)  
-  You can add valid keys later with methods.  
-  
-  - **KeyBinder(KeyCode[] validKeys)**  
-  Enter an array of KeyCodes you choose to be valid for binding.  
-  Will create the KeyBinder and add all the KeyCodes from your array to the list of valid keys.  
-  You can add valid keys any time. 
-  
-  - **KeyBinder(List**<**KeyCode**> **validKeys)**  
-  Enter a list of KeyCodes you choose to be valid for binding.  
-  Will create the KeyBinder and add all the KeyCodes from the list you given, to the list of valid keys.  
-  You can add valid keys any time. 
   
 ### Methods
-  - **Update()**  
+  - **Update ()**  
   Call this method on Update() inside a MonoBehaviour inherited class.
   
-  - **InputCheckingBeginSingle(Action**<**KeyCode**> **methodToActive)**  
+  - **InputCheckingBeginSingle (Action**<**KeyCode**> **methodToActive)**  
   Enter a method with one parameter of type KeyCode as a parameter.  
   Checks for the next pressed key, then calls the method you entered, inputing the pressed key, and stops checking.  
   
+  - **InputCheckingBeginContinuous (Action**<**KeyCode**> **methodToActive)**  
+  Enter a method with one parameter of type KeyCode as a parameter.  
+  Checks for the next pressed key, then calls the method you entered until you cancel the input checking. 
+  
+  - **InputCheckingCancel ()**  
+  Resets and turns off input checking.
+  Use this to turn of the Continuous input checking
