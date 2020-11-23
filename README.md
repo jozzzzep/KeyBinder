@@ -1,4 +1,5 @@
-# KeyBinder
+![img](https://i.imgur.com/r9oSIvS.png)  
+
 An easy to use all-in-one class for a key-binding in Unity.  
 Supports input filtering (You can choose which keys are valid for binding).
 #### Content
