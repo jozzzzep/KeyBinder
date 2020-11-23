@@ -70,7 +70,7 @@ Now you want to let the player choose a key for Jump.
   - Create a method that should stop checking for input.
   ```csharp
   KeyBinder keyBinder = new KeyBinder();
-  Text textComponent;
+  public Text textComponent;
   
   // displays the name of a given KeyCode the text component
   void ShowKeyOnScreen(KeyCode key)
