@@ -137,7 +137,7 @@ Now you want to let the player choose a key for Jump.
   ```
 
 # Documentations
-![image](https://i.imgur.com/YcbzJad.jpg)
+![image](https://i.imgur.com/IpmP3Dp.jpg)
 ### Constructors
   - **KeyBinder ()**  
   No parameters enered.  
