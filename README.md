@@ -15,7 +15,7 @@ Supports input filtering (You can choose which keys are valid for binding).
 # Setup
   
 - First, create and initialize a KeyBinder.  
-See [here](#input-filtering-system) about the input filtering system.  
+Read [here](#input-filtering-system) about the input filtering system.  
 Make sure you are using this class inside a MonoBehaviour
 ```csharp
 KeyBinder keyBinder = new KeyBinder(); // A KeyBinder without input filtering
@@ -58,7 +58,7 @@ Now you want to let the player choose a key for Jump.
   void Update()
   {
     keyBinder.Update();
-    if (Input.GetKeyDown(jumpKey)
+    if (Input.GetKeyDown(jumpKey))
     {
       Jump();
     }
