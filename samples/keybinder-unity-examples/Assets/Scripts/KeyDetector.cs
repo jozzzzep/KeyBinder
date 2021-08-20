@@ -3,37 +3,13 @@ using UnityEngine;
 
 namespace KeyBinder
 {
+    /// Source code & Documentation: https://github.com/JosepeDev/KeyBinder
+    /// <summary>
+    /// A class for detecting which keys are being press
+    /// </summary>
     public class KeyDetector : MonoBehaviour
     {
-
-
-        /// An easy to use class for a key-binding system in Unity
-        /// Supports input filtering (You can choose wich keys are valid for binding)
-        ///
-        /// WIKI & INFO: https://github.com/JosepeDev/KeyBinder
-        /// 
-        /// IMPORTANT >>> Call this class's "Update()" on Update() inside a MonoBehaviour
-        /// 
-        /// Properties:
-        /// - LatestKey
-        /// - ValidKeys
-        /// - IsActive
-        /// - InputFilteringActive
-        /// 
-        /// Methods:
-        /// - InputCheckingBeginSingle (Action<KeyCode>)
-        /// - InputCheckingBeginContinuous (Action<KeyCode>)
-        /// - InputCheckingStop ()
-        /// - InputCheckingPause ()
-        /// - InputCheckingResume ()
-        /// - InputFilteringAdd (KeyCode key)
-        /// - InputFilteringAdd (KeyCode[] keys)
-        /// - InputFilteringAdd (List<KeyCode> keys)
-        /// - InputFilteringRemove (KeyCode key)
-        /// - InputFilteringRemove (KeyCode[] keys)
-        /// - InputFilteringRemove (List<KeyCode> keys)
-        /// - InputFilteringRemoveAll ()
-
+        private static Action<KeyCode> singleDetectionAction;
         private static KeyDetector _instance;
         private static KeyDetector Instance
         {
@@ -45,45 +21,47 @@ namespace KeyBinder
             }
         }
 
-        private static KeyDetector Initialize()
-        {
-            var instance = FindObjectOfType<KeyDetector>();
-            if (instance == null)
-            {
-                var obj = new GameObject("KeyBinder");
-                instance = obj.AddComponent<KeyDetector>();
-                instance.inputFilter = new InputFilter();
-            }
-            return instance;
-        }
+        /// <summary>
+        /// Determines if the <see cref="KeyDetector"/> is currently checking for input.
+        /// </summary>
+        public static bool InputCheckIsActive => Instance.isActive;
 
-        private static Action<KeyCode> singleDetectionAction;
-        private static bool singleDetectionActive;
-        private static InputFilter InputFilter => Instance.inputFilter;
-        private InputFilter inputFilter;
-
-        public static event Action<KeyCode> KeyReceived;
+        /// <summary>
+        /// The input filter of the detector, inactive by default, add valid keys to activate filtering
+        /// </summary>
+        public static InputFilter InputFilter => Instance.inputFilter;
 
         /// <summary>
         /// Returns the latest key the <see cref="KeyDetector"/> received.
         /// </summary>
-        static public KeyCode LatestKey => Instance.latestKey;
-        private KeyCode latestKey = KeyCode.None;
+        public static KeyCode LatestKey => Instance.latestKey;
 
         /// <summary>
-        /// Determines if the <see cref="KeyDetector"/> is currently checking for input.
+        /// Called when a key has been received by key detector
         /// </summary>
-        static public bool InputCheckIsActive => Instance.isActive;
-        bool isActive = false;
+        public static event Action<KeyCode> KeyReceived;
+        
+        private InputFilter inputFilter;
+        private KeyCode latestKey = KeyCode.None;
+        private bool isActive = false;
 
-        private void Update()
+        /// <summary>
+        /// Initialize the keydetector and make sure there's only a single instance of it
+        /// </summary>
+        private static KeyDetector Initialize()
         {
-            // if the input checking is active
-            // it checks for input
-            // when a key is pressed it calls ReceiveInput().
-            if (isActive)
-                if (Input.anyKey)
-                    ReceiveInput();
+            var keyDetectors = FindObjectsOfType<KeyDetector>();
+            if (keyDetectors == null || keyDetectors.Length == 0)
+            {
+                var obj = new GameObject("KeyBinder");
+                var keyDetector = obj.AddComponent<KeyDetector>();
+                keyDetector.inputFilter = new InputFilter();
+                return keyDetector;
+            }
+            else if (keyDetectors.Length > 1)
+                for (int i = 1; i < keyDetectors.Length; i++)
+                    Destroy(keyDetectors[i].gameObject);
+            return keyDetectors[0];
         }
 
         /// <summary>
@@ -91,8 +69,8 @@ namespace KeyBinder
         /// </summary>
         public static void InputCheckOnce(Action<KeyCode> action)
         {
+            if (action == null) return;
             singleDetectionAction = action;
-            singleDetectionActive = true;
             InputCheckSetActive(true);
         }
 
@@ -109,8 +87,32 @@ namespace KeyBinder
             KeyReceived = null;
 
 
+        private static void OnKeyReceived(KeyCode key)
+        {
+            var e = KeyReceived;
+            if (e != null)
+                e(key);
+
+            if (singleDetectionAction != null)
+            {
+                singleDetectionAction(key);
+                singleDetectionAction = null;
+                InputCheckSetActive(false);
+            }
+        }
+
+        private void Update()
+        {
+            // if the input checking is active
+            // it checks for input
+            // when a key is pressed it calls ReceiveInput().
+            if (isActive)
+                if (Input.anyKey)
+                    ReceiveInput();
+        }
+
         // Returns the KeyCode of the current pressed key
-        KeyCode GetPressedKey()
+        private KeyCode GetPressedKey()
         {
             var keysArray = (KeyCode[])Enum.GetValues(typeof(KeyCode));
             for (int i = 0; i < keysArray.Length; i++)
@@ -120,7 +122,7 @@ namespace KeyBinder
         }
 
         // Returns the pressed key
-        void ReceiveInput()
+        private void ReceiveInput()
         {
             KeyCode thePressedKey = GetPressedKey();
             if (thePressedKey != KeyCode.None)
@@ -130,22 +132,6 @@ namespace KeyBinder
                     latestKey = thePressedKey;
                     OnKeyReceived(thePressedKey);
                 }
-            }
-        }
-
-        private static void OnKeyReceived(KeyCode key)
-        {
-            var e = KeyReceived;
-            if (e != null)
-                e(key);
-
-            if (singleDetectionActive)
-            {
-                if (singleDetectionAction != null)
-                    singleDetectionAction(key);
-                singleDetectionAction = null;
-                InputCheckSetActive(false);
-                singleDetectionActive = false;
             }
         }
     }

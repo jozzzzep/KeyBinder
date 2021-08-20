@@ -2,7 +2,8 @@
 
 namespace KeyBinder
 {
-    public static class EventsExtensions
+    /// Source code & Documentation: https://github.com/JosepeDev/KeyBinder
+    internal static class EventsExtensions
     {
         public static void SafeInvoke(this Action e)
         {
