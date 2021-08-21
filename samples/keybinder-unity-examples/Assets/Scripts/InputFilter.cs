@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace KeyBinder
 {
@@ -10,16 +12,28 @@ namespace KeyBinder
     /// </summary>
     public class InputFilter
     {
+        public enum Method
+        {
+            /// <summary>
+            /// The key will be valid only if it is inside the keys list
+            /// </summary>
+            Whitelist,
+            /// <summary>
+            /// If the key is inside the keys list it'll be invalid
+            /// </summary>
+            Blacklist
+        }
+
         /// <summary>
         /// The key's that are valid for the <see cref="KeyDetector"/> to receive, if empty - all keys are valid
         /// </summary>
-        public List<KeyCode> ValidKeys
+        public List<KeyCode> KeysList
         {
-            get => validKeysList;
+            get => keysList;
             set
             {
-                validKeysList = value;
-                validKeys = validKeysList.ToArray();
+                keysList = value;
+                keysHashSet = new HashSet<KeyCode>(keysList.Distinct());
                 DetermineFilterActivity();
             }
         }
@@ -31,15 +45,23 @@ namespace KeyBinder
         public bool FilteringActive { get; private set; }
 
         /// <summary>
+        /// The filtering method of the input filter
+        /// </summary>
+        public Method FilteringMethod { get; set; }
+
+        /// <summary>
         /// Raised when an invalid key has been detected
         /// </summary>
         public event Action<KeyCode> InvalidKeyReceived;
 
-        private List<KeyCode> validKeysList;
-        private KeyCode[] validKeys;
+        private List<KeyCode> keysList;
+        private HashSet<KeyCode> keysHashSet;
 
-        internal InputFilter() =>
-            ValidKeys = new List<KeyCode>();
+        internal InputFilter()
+        {
+            KeysList = new List<KeyCode>();
+            FilteringMethod = Method.Whitelist;
+        }
 
         /// <summary>
         /// Derermines the validity of a given key
@@ -50,11 +72,16 @@ namespace KeyBinder
         {
             if (FilteringActive)
             {
-                for (int i = 0; i < validKeys.Length; i++)
-                    if (validKeys[i] == key)
-                        return true;
-                InvalidKeyReceived.SafeInvoke(key);
-                return false;
+                bool valid = 
+                    FilteringMethod == Method.Whitelist ?
+                    keysHashSet.Contains(key) :
+                    !keysHashSet.Contains(key);
+
+                if (!valid)
+                {
+                    InvalidKeyReceived(key);
+                    return false;
+                }
             }
             return true;
         }
@@ -63,6 +90,6 @@ namespace KeyBinder
         /// Called everytime the valid keys array changes
         /// </summary>
         private void DetermineFilterActivity() =>
-            FilteringActive = validKeys != null && validKeys.Length > 0;
+            FilteringActive = keysHashSet != null && keysHashSet.Count > 0;
     }
 }
