@@ -16,11 +16,12 @@ namespace KeyBinder
             get
             {
                 if (_instance == null)
-                    _instance = Initialize();
+                    _instance = Extensions.Initialize<KeyDetector>("KeyDetector");
                 return _instance;
             }
         }
-
+        // game 
+        // making;
         /// <summary>
         /// Determines if the <see cref="KeyDetector"/> is currently checking for input.
         /// </summary>
@@ -41,28 +42,9 @@ namespace KeyBinder
         /// </summary>
         public static event Action<KeyCode> KeyReceived;
         
-        private InputFilter inputFilter;
+        private InputFilter inputFilter = new InputFilter();
         private KeyCode latestKey = KeyCode.None;
         private bool isActive = false;
-
-        /// <summary>
-        /// Initialize the keydetector and make sure there's only a single instance of it
-        /// </summary>
-        private static KeyDetector Initialize()
-        {
-            var keyDetectors = FindObjectsOfType<KeyDetector>();
-            if (keyDetectors == null || keyDetectors.Length == 0)
-            {
-                var obj = new GameObject("KeyBinder");
-                var keyDetector = obj.AddComponent<KeyDetector>();
-                keyDetector.inputFilter = new InputFilter();
-                return keyDetector;
-            }
-            else if (keyDetectors.Length > 1)
-                for (int i = 1; i < keyDetectors.Length; i++)
-                    Destroy(keyDetectors[i].gameObject);
-            return keyDetectors[0];
-        }
 
         /// <summary>
         /// Waits until a key is pressed, calls the action, and turns off the input checking
@@ -92,6 +74,7 @@ namespace KeyBinder
             var e = KeyReceived;
             if (e != null)
                 e(key);
+
 
             if (singleDetectionAction != null)
             {
@@ -124,15 +107,15 @@ namespace KeyBinder
         // Returns the pressed key
         private void ReceiveInput()
         {
-            KeyCode thePressedKey = GetPressedKey();
-            if (thePressedKey != KeyCode.None)
+            var key = GetPressedKey();
+            if (key != KeyCode.None)
             {
-                if (inputFilter.IsKeyValid(thePressedKey))
+                if (inputFilter.IsKeyValid(key))
                 {
-                    latestKey = thePressedKey;
-                    OnKeyReceived(thePressedKey);
+                    latestKey = key;
+                    OnKeyReceived(key);
                 }
             }
-        }
+        }    
     }
 }
