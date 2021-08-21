@@ -25,7 +25,7 @@ namespace KeyBinder
         /// <summary>
         /// Determines if the <see cref="KeyDetector"/> is currently checking for input.
         /// </summary>
-        public static bool InputCheckIsActive => Instance.isActive;
+        public static bool InputCheckIsActive => Instance.keyCheckIsActive;
 
         /// <summary>
         /// The input filter of the detector, inactive by default, add valid keys to activate filtering
@@ -44,7 +44,7 @@ namespace KeyBinder
         
         private InputFilter inputFilter = new InputFilter();
         private KeyCode latestKey = KeyCode.None;
-        private bool isActive = false;
+        private bool keyCheckIsActive = false;
 
         /// <summary>
         /// Waits until a key is pressed, calls the action, and turns off the input checking
@@ -60,7 +60,7 @@ namespace KeyBinder
         /// Set whether you want to check for input
         /// </summary>
         public static void InputCheckSetActive(bool active) =>
-            Instance.isActive = active;
+            Instance.keyCheckIsActive = active;
 
         /// <summary>
         /// Removes all the listeners from the <see cref="KeyReceived"/> event
@@ -89,7 +89,7 @@ namespace KeyBinder
             // if the input checking is active
             // it checks for input
             // when a key is pressed it calls ReceiveInput().
-            if (isActive)
+            if (keyCheckIsActive)
                 if (Input.anyKey)
                     ReceiveInput();
         }
