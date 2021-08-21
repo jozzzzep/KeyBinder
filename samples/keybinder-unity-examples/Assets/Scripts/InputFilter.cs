@@ -13,7 +13,16 @@ namespace KeyBinder
         /// <summary>
         /// The key's that are valid for the <see cref="KeyDetector"/> to receive, if empty - all keys are valid
         /// </summary>
-        public KeyCode[] ValidKeys { get; private set; }
+        public List<KeyCode> ValidKeys
+        {
+            get => validKeysList;
+            set
+            {
+                validKeysList = value;
+                validKeys = validKeysList.ToArray();
+                DetermineFilterActivity();
+            }
+        }
 
         /// <summary>
         /// Determines whether the key detector input filtering is active, 
@@ -26,82 +35,11 @@ namespace KeyBinder
         /// </summary>
         public event Action<KeyCode> InvalidKeyReceived;
 
-        internal InputFilter()
-        {
-            ValidKeys = new KeyCode[0];
-            FilteringActive = false;
-        }
+        private List<KeyCode> validKeysList;
+        private KeyCode[] validKeys;
 
-        /// <summary>
-        /// Set the valid keys array
-        /// </summary>
-        public void ValidKeysSet(KeyCode[] keys)
-        {
-            ValidKeys = keys;
-            DetermineFilterActivity();
-        }
-
-        /// <summary>
-        /// If you want to add a key for the input filering list
-        /// </summary>
-        /// <param name="key">The key you want to add</param>
-        public void ValidKeysAdd(KeyCode key)
-        {
-            var current = new List<KeyCode>(ValidKeys);
-            current.Add(key);
-            ValidKeys = current.ToArray();
-            DetermineFilterActivity();
-        }
-
-        /// <summary>
-        /// If you want to add multiple keys for the input filering list
-        /// </summary>
-        /// <param name="keys">Array with the keys you want to add</param>
-        public void ValidKeysAdd(IEnumerable<KeyCode> keys)
-        {
-            var current = new List<KeyCode>(ValidKeys);
-            current.AddRange(keys);
-            ValidKeys = current.ToArray();
-            DetermineFilterActivity();
-        }
-
-        /// <summary>
-        /// Removes a certain KeyCode from the list of valid keys if it exists there
-        /// </summary>
-        /// <param name="key">A key you want to remove from the list of valid keys.</param>
-        public void ValidKeysRemove(KeyCode key)
-        {
-            var current = new List<KeyCode>(ValidKeys);
-            if (current.Count > 0)
-                if (current.Contains(key))
-                    current.Remove(key);
-            ValidKeys = current.ToArray();
-            DetermineFilterActivity();
-        }
-
-        /// <summary>
-        /// Removes a bunch of KeyCodes from the valid keys if they are contained 
-        /// </summary>
-        /// <param name="key">An array of keys you want to remove from the list of valid keys.</param>
-        public void ValidKeysRemove(KeyCode[] keys)
-        {
-            var current = new List<KeyCode>(ValidKeys);
-            if (current.Count > 0)
-                for (int i = 0; i < keys.Length; i++)
-                    if (current.Contains(keys[i]))
-                        current.Remove(keys[i]);
-            ValidKeys = current.ToArray();
-            DetermineFilterActivity();
-        }
-
-        /// <summary>
-        /// Clears the list of valid keys and turns of input filtering
-        /// </summary>
-        public void ValidKeysRemoveAll()
-        {
-            ValidKeys = null;
-            DetermineFilterActivity();
-        }
+        internal InputFilter() =>
+            ValidKeys = new List<KeyCode>();
 
         /// <summary>
         /// Derermines the validity of a given key
@@ -112,8 +50,8 @@ namespace KeyBinder
         {
             if (FilteringActive)
             {
-                for (int i = 0; i < ValidKeys.Length; i++)
-                    if (ValidKeys[i] == key)
+                for (int i = 0; i < validKeys.Length; i++)
+                    if (validKeys[i] == key)
                         return true;
                 InvalidKeyReceived.SafeInvoke(key);
                 return false;
@@ -125,6 +63,6 @@ namespace KeyBinder
         /// Called everytime the valid keys array changes
         /// </summary>
         private void DetermineFilterActivity() =>
-            FilteringActive = ValidKeys != null && ValidKeys.Length > 0;
+            FilteringActive = validKeys != null && validKeys.Length > 0;
     }
 }
