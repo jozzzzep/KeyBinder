@@ -68,7 +68,7 @@ namespace KeyBinder
         /// </summary>
         /// <param name="key">The key</param>
         /// <returns>true if the key is valid</returns>
-        public bool IsKeyValid(KeyCode key)
+        internal bool IsKeyValid(KeyCode key)
         {
             if (FilteringActive)
             {

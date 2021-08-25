@@ -16,12 +16,15 @@ namespace KeyBinder
             get
             {
                 if (_instance == null)
+                {
                     _instance = Extensions.Initialize<KeyDetector>("KeyDetector");
+                    if (!_instance.isInitialized)
+                        KeyReceived = null;
+                }
                 return _instance;
             }
         }
-        // game 
-        // making;
+
         /// <summary>
         /// Determines if the <see cref="KeyDetector"/> is currently checking for input.
         /// </summary>
@@ -45,6 +48,7 @@ namespace KeyBinder
         private InputFilter inputFilter = new InputFilter();
         private KeyCode latestKey = KeyCode.None;
         private bool keyCheckIsActive = false;
+        private bool isInitialized = false;
 
         /// <summary>
         /// Waits until a key is pressed, calls the action, and turns off the input checking
