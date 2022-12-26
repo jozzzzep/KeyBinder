@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace KeyBinder
 {
-    /// Source code & Documentation: https://github.com/JosepeDev/KeyBinder
+    /// Source code & Documentation: https://github.com/jozzzzep/KeyBinder
     /// <summary>
     /// The class that filters the input a <see cref="KeyDetector"/> receives
     /// </summary>
@@ -25,18 +26,9 @@ namespace KeyBinder
         }
 
         /// <summary>
-        /// The key's that are valid for the <see cref="KeyDetector"/> to receive, if empty - all keys are valid
+        /// The key's that are valid/invalid for the <see cref="KeyDetector"/> to receive, if empty - all keys are valid
         /// </summary>
-        public List<KeyCode> KeysList
-        {
-            get => keysList;
-            set
-            {
-                keysList = value;
-                keysHashSet = new HashSet<KeyCode>(keysList.Distinct());
-                DetermineFilterActivity();
-            }
-        }
+        public KeyCode[] Keys => keysList;
 
         /// <summary>
         /// Determines whether the key detector input filtering is active, 
@@ -54,13 +46,25 @@ namespace KeyBinder
         /// </summary>
         public event Action<KeyCode> InvalidKeyReceived;
 
-        private List<KeyCode> keysList;
+        private KeyCode[] keysList;
         private HashSet<KeyCode> keysHashSet;
 
-        internal InputFilter()
+        /// <summary>
+        /// Creates an inactive empty filter
+        /// </summary>
+        internal InputFilter() : 
+            this(new List<KeyCode>().ToArray(), Method.Whitelist)
+        { }
+
+        /// <summary>
+        /// Creates a filter, if the array of keys contains at least one key, it will activate the filter
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <param name="filteringMethod"></param>
+        internal InputFilter(KeyCode[] keys, Method filteringMethod = Method.Whitelist)
         {
-            KeysList = new List<KeyCode>();
-            FilteringMethod = Method.Whitelist;
+            FilteringMethod = filteringMethod;
+            SetList(keys);
         }
 
         /// <summary>
@@ -86,10 +90,11 @@ namespace KeyBinder
             return true;
         }
 
-        /// <summary>
-        /// Called everytime the valid keys array changes
-        /// </summary>
-        private void DetermineFilterActivity() =>
+        private void SetList(KeyCode[] keysList)
+        {
+            this.keysList = keysList;
+            keysHashSet = new HashSet<KeyCode>(keysList.Distinct());
             FilteringActive = keysHashSet != null && keysHashSet.Count > 0;
+        }
     }
 }

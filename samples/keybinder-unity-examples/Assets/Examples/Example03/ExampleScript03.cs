@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using KeyBinder;
 
 public class ExampleScript03 : MonoBehaviour
 {
+    /// a better solution is in example 4
+
     [SerializeField] TextMeshProUGUI textComp;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform firePoint;
@@ -52,7 +52,7 @@ public class ExampleScript03 : MonoBehaviour
     void DetectedNewKey(KeyCode key)
     {
         UpdateKeyBind(key);
-        KeyDetector.KeyReceived -= UpdateKeyBind;
+        KeyDetector.KeyReceived -= DetectedNewKey;
         KeyDetector.InputCheckSetActive(false);
         binding = false;
     }

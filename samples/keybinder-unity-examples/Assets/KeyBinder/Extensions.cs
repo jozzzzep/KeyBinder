@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KeyBinder
 {
-    /// Source code & Documentation: https://github.com/JosepeDev/KeyBinder
+    /// Source code & Documentation: https://github.com/jozzzzep/KeyBinder
     internal static class Extensions
     {
         internal static void SafeInvoke(this Action e)

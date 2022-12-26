@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KeyBinder
 {
-    /// Source code & Documentation: https://github.com/JosepeDev/KeyBinder
+    /// Source code & Documentation: https://github.com/jozzzzep/KeyBinder
     /// <summary>
     /// A class for detecting which keys are being press
     /// </summary>
@@ -72,13 +72,17 @@ namespace KeyBinder
         public static void RemoveAllListeners() =>
             KeyReceived = null;
 
+        /// <summary>
+        /// Used to set custom filtering for the <see cref="KeyDetector"/>
+        /// </summary>
+        /// <param name="filter">An <see cref="KeyBinder.InputFilter"/> class</param>
+        public static void SetInputFilter(InputFilter filter) => Instance.inputFilter = filter;
 
         private static void OnKeyReceived(KeyCode key)
         {
             var e = KeyReceived;
             if (e != null)
                 e(key);
-
 
             if (singleDetectionAction != null)
             {
@@ -112,13 +116,11 @@ namespace KeyBinder
         private void ReceiveInput()
         {
             var key = GetPressedKey();
-            if (key != KeyCode.None)
+            if (key != KeyCode.None &&
+                inputFilter.IsKeyValid(key))
             {
-                if (inputFilter.IsKeyValid(key))
-                {
-                    latestKey = key;
-                    OnKeyReceived(key);
-                }
+                latestKey = key;
+                OnKeyReceived(key);
             }
         }    
     }
