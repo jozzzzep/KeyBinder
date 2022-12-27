@@ -14,6 +14,8 @@ public class ExampleScript02 : MonoBehaviour
             KeyCode.Escape,
             KeyCode.Numlock,
         };
+
+        var f = new InputFilter(keysToFilter);
         textComp.text = "Press a key";
         KeyDetector.InputCheckSetActive(true);
     }
