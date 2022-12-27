@@ -9,6 +9,11 @@ public class ExampleScript02 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        KeyCode[] keysToFilter =
+        {
+            KeyCode.Escape,
+            KeyCode.Numlock,
+        };
         textComp.text = "Press a key";
         KeyDetector.InputCheckSetActive(true);
     }

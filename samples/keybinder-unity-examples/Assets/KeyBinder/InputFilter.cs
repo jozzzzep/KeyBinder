@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 
 namespace KeyBinder
 {
@@ -13,6 +11,15 @@ namespace KeyBinder
     /// </summary>
     public class InputFilter
     {
+        /// Properties ------------
+        /// - Keys                - The key's that are valid/invalid for the KeyDetector to receive
+        /// - FilteringActive     - Determines whether the filter is filtering
+        /// - FilteringMethod     - The filtering method the input filter uses
+        /// -----------------------
+
+        /// <summary>
+        /// Determines the filtering method the <see cref="InputFilter"/> uses 
+        /// </summary>
         public enum Method
         {
             /// <summary>
@@ -31,21 +38,16 @@ namespace KeyBinder
         public KeyCode[] Keys => keysList;
 
         /// <summary>
-        /// Determines whether the key detector input filtering is active, 
-        /// clear all valid keys to deactivate, add valid keys to activate filtering
+        /// Determines whether the key detector input filtering is active
         /// </summary>
         public bool FilteringActive { get; private set; }
 
         /// <summary>
-        /// The filtering method of the input filter
+        /// The filtering method the input filter uses
         /// </summary>
-        public Method FilteringMethod { get; set; }
+        public Method FilteringMethod { get; private set; }
 
-        /// <summary>
-        /// Raised when an invalid key has been detected
-        /// </summary>
-        public event Action<KeyCode> InvalidKeyReceived;
-
+        
         private KeyCode[] keysList;
         private HashSet<KeyCode> keysHashSet;
 
@@ -57,14 +59,28 @@ namespace KeyBinder
         { }
 
         /// <summary>
+        /// Creates a filter from a preset
+        /// </summary>
+        internal InputFilter(IInputFilterPreset preset) :
+            this(preset.KeysList, preset.FilteringMethod)
+        { }
+
+        /// <summary>
         /// Creates a filter, if the array of keys contains at least one key, it will activate the filter
         /// </summary>
-        /// <param name="keys"></param>
+        /// <param name="keys">List of keys to filter</param>
         /// <param name="filteringMethod"></param>
         internal InputFilter(KeyCode[] keys, Method filteringMethod = Method.Whitelist)
         {
             FilteringMethod = filteringMethod;
-            SetList(keys);
+            keysList = keys;
+            if (keysList != null)
+            {
+                keysHashSet = new HashSet<KeyCode>(keysList.Distinct());
+                FilteringActive = keysHashSet != null && keysHashSet.Count > 0;
+            }
+            else
+                FilteringActive = false;
         }
 
         /// <summary>
@@ -74,27 +90,15 @@ namespace KeyBinder
         /// <returns>true if the key is valid</returns>
         internal bool IsKeyValid(KeyCode key)
         {
+            bool valid = true;
             if (FilteringActive)
             {
-                bool valid = 
+                valid = 
                     FilteringMethod == Method.Whitelist ?
                     keysHashSet.Contains(key) :
                     !keysHashSet.Contains(key);
-
-                if (!valid)
-                {
-                    InvalidKeyReceived(key);
-                    return false;
-                }
             }
-            return true;
-        }
-
-        private void SetList(KeyCode[] keysList)
-        {
-            this.keysList = keysList;
-            keysHashSet = new HashSet<KeyCode>(keysList.Distinct());
-            FilteringActive = keysHashSet != null && keysHashSet.Count > 0;
+            return valid;
         }
     }
 }

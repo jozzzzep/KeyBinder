@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 namespace KeyBinder
 {
     /// Source code & Documentation: https://github.com/jozzzzep/KeyBinder
     internal static class Extensions
     {
+        
+
         internal static void SafeInvoke(this Action e)
         {
             if (e != null)
@@ -40,5 +43,7 @@ namespace KeyBinder
                     UnityEngine.Object.Destroy(objects[i].gameObject);
             return objects[0];
         }
+
+
     }
 }

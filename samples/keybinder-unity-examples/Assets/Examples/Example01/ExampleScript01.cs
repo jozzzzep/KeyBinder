@@ -11,9 +11,6 @@ public class ExampleScript01 : MonoBehaviour
         textComp.text = "Press a key";
         KeyDetector.InputCheckSetActive(true);
         KeyDetector.KeyReceived += KeyBinderKeyReceived;
-
-        Debug.Log("getting");
-        KeyDetector.InputFilter.Keys.Add(KeyCode.Escape);
     }
 
     private void KeyBinderKeyReceived(KeyCode obj)
