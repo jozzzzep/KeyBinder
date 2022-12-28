@@ -19,6 +19,7 @@ The tool has detaild documentation, and simple examples of usage.
 #### Content 
   - **[Documentation](#documentation-content)**  
   - **[Examples & Guide](#examples-and-guide)**
+  - **[Importing](#importing-guide)**
 
 ---
 ### Documentation Content:
@@ -327,6 +328,8 @@ So you don't need to worry about stoping the input checking manually.
 *You can also make the "BindShootKey" method - public, to assign it to a button in the UI.*
 
 The KeyDetector also supports InputFiltering read about it [here](#input-filtering)
+
+---
 
 ### Importing Guide
 [**Click here to download**](https://github.com/jozzzzep/KeyBinder/raw/main/packages/KeyBinder.unitypackage), or go to the packages folder of the repository and download the package file.  
