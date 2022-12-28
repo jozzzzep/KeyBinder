@@ -136,6 +136,7 @@ namespace KeyBinder
             // if the input checking is active
             // it checks for input
             // when a key is pressed it calls ReceiveInput().
+
             if (keyCheckIsActive)
                 if (Input.anyKey)
                     ReceiveInput();
