@@ -21,12 +21,6 @@ The tool has detaild documentation, and simple examples of usage.
   - **[Examples & Guide](#examples-and-guide)**
 
 ---
-### Importing
-[**Click here to download**](https://github.com/jozzzzep/KeyBinder/raw/main/packages/KeyBinder.unitypackage), or go to the packages folder of the repository and download the package file.  
-Then import the package directly to your project like any other Unity package.  
-This is he fastest and easiest way.  
-
----
 ### Documentation Content:
 ![img](https://i.imgur.com/swFyjTR.png)
 
@@ -334,3 +328,7 @@ So you don't need to worry about stoping the input checking manually.
 
 The KeyDetector also supports InputFiltering read about it [here](#input-filtering)
 
+### Importing Guide
+[**Click here to download**](https://github.com/jozzzzep/KeyBinder/raw/main/packages/KeyBinder.unitypackage), or go to the packages folder of the repository and download the package file.  
+Then import the package directly to your project like any other Unity package.  
+This is he fastest and easiest way.  
