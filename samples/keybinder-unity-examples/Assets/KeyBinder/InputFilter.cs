@@ -46,7 +46,6 @@ namespace KeyBinder
         /// The filtering method the input filter uses
         /// </summary>
         public Method FilteringMethod { get; private set; }
-
         
         private KeyCode[] keysList;
         private HashSet<KeyCode> keysHashSet;

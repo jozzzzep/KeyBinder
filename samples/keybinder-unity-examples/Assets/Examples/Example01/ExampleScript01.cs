@@ -10,11 +10,10 @@ public class ExampleScript01 : MonoBehaviour
     {
         textComp.text = "Press a key";
         KeyDetector.InputCheckSetActive(true);
-        KeyDetector.KeyReceived += KeyBinderKeyReceived;
     }
 
-    private void KeyBinderKeyReceived(KeyCode obj)
+    private void Update()
     {
-        textComp.text = $"Key pressed: {obj}";
+        textComp.text = $"Key pressed: {KeyDetector.LatestKey}";
     }
 }
