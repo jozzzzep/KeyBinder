@@ -17,12 +17,11 @@ Supports input filtering (You can choose which keys are valid for binding).
 The tool has detaild documentation, and simple examples of usage.  
 
 #### Content 
-  - **[Documentation](#documentation-content)**  
-  - **[Examples & Guide](#examples-and-guide)**
-  - **[Importing](#importing-guide)**
+- **[Documentation](#documentation-content)**  
+- **[Examples & Guide](#examples-and-guide)**
+- **[Importing](#importing-guide)**
 
----
-### Documentation Content:
+## Documentation Content:
 ![img](https://i.imgur.com/swFyjTR.png)
 
   - [KeyDetector](#keydetector)
@@ -35,9 +34,10 @@ The tool has detaild documentation, and simple examples of usage.
       - [Advanced Filtering Examples](#advanced-filtering-examples)
 
 ## KeyDetector
-The main class of the KeyBinder tool, used for detecting when a user/player presses a key.
+The main class of the KeyBinder tool, used for detecting when a user/player presses a key.  
+All these members are static, so you don't need to create an instance of a KeyDetector.  
 
-- Properties
+- **Properties**
   - <code>InputCheckIsActive</code>  
   Set to false by default  
   Determines if the KeyDetector is currently checking for input  
@@ -46,20 +46,23 @@ The main class of the KeyBinder tool, used for detecting when a user/player pres
   - <code>InputFilter</code>  
   The input filter of the detector  
   Filtering is disabled by default  
-  To activate call - **SetInputFilter()**  
+  To activate read about [Input Filtering](#input-filtering)  
   To disable filtering call - **DisableInputFilter()**
 
   - <code>LatestKey</code>  
   Returns the latest valid key the KeyDetector received
 
-- Events
+- **Events**
   - ``KeyReceived (KeyCode) ``  
   Raised when a valid key has been received by the key detector
 
   - ``InvalidKeyReceived (KeyCode)``  
-  Raised when an invalid key has been detected
+  Raised when an invalid key has been detected  
+  Will be raised only if there is an active input filtering  
+  When the InputFilter detects an invalid key it will raise this event
 
-- Methods
+
+- **Methods**
   - <code>InputCheckOnce (Action\<KeyCode\>)</code>  
   Waits until a key is detected, calls the action, and turns off input checking  
   Call this if you want to stop the input checking after a single key press  
@@ -228,6 +231,11 @@ In this case I added **"Example"** and named it **"InputFilterPresetExample"**
 
 This tool can be used in many ways.  
 Here are some examples:  
+
+- [**Example #1**](#example-1)
+- [**Example #2**](#example-2)
+- [**Unity Examples**](#unity-examples)
+
 ## Example #1
 You can can check which key the player/user pressed recently.  
 To to that, turn on input checking in the KeyDetector class.  
@@ -328,6 +336,29 @@ So you don't need to worry about stoping the input checking manually.
 *You can also make the "BindShootKey" method - public, to assign it to a button in the UI.*
 
 The KeyDetector also supports InputFiltering read about it [here](#input-filtering)
+
+
+## Unity examples
+Clone the repository  
+In the folder "samples" you can find a unity project named "keybinder-unity-examples"  
+Inside this unity project you have many examples that show you what you can do with the tool  
+
+---
+In the unity file browser, you will see these folders:
+
+![img](https://i.imgur.com/h12lUij.png)
+
+Then enter the "Examples" folder and you will see all the available examples
+
+![img](https://i.imgur.com/hgMAz43.png)
+ 
+In every example folder you will have a different scene that shows the example
+
+![img](https://i.imgur.com/vgQz8Mt.png)
+
+Now just open the scene and press play to see what happens.  
+Inside the project you have 6 examples.  
+You can learn from every example how the tool works.  
 
 ---
 
