@@ -1,147 +1,43 @@
 ![img](https://i.imgur.com/zkpS6qA.png)  
 
-An easy to use all-in-one class for a key-binding in Unity.  
-Supports input filtering (You can choose which keys are valid for binding).
-#### Content
-  - **[Setup](#setup)**
-  - **[Examples](#examples)**
-  - **[Input Filtering System](#input-filtering-system)**
-  - **[Documentations](#documentations)**
-      - [Properties](#properties)
-      - [Constructors](#constructors)
-      - [Methods](#methods)
+<p align="center">
+        <img src="https://img.shields.io/codefactor/grade/github/jozzzzep/KeyBinder/main">
+        <img src="https://img.shields.io/github/languages/code-size/jozzzzep/KeyBinder">
+        <img src="https://img.shields.io/github/license/jozzzzep/KeyBinder">
+        <img src="https://img.shields.io/github/v/release/jozzzzep/KeyBinder">
+</p>
+<p align="center">
+        <img src="https://img.shields.io/github/followers/jozzzzep?style=social">
+        <img src="https://img.shields.io/github/watchers/jozzzzep/KeyBinder?style=social">
+        <img src="https://img.shields.io/github/stars/jozzzzep/KeyBinder?style=social">
+</p>
 
+An easy to use tool for key-binding in Unity.  
+Supports input filtering (You can choose which keys are valid for binding).  
+The tool has detaild documentation, and simple examples of usage.  
 
-# Setup
-  
-- First, create and initialize a KeyBinder.  
-Read [here](#input-filtering-system) about the input filtering system.  
-Make sure you are using this class inside a MonoBehaviour
-```csharp
-KeyBinder keyBinder = new KeyBinder(); // A KeyBinder without input filtering
-```
-- Now, the most **IMPORTANT** thing:  
-call the "Update()" method of the KeyBinder inside the Update() method of your MonoBehaviour
-```csharp
-private void Update()
-{
-  keyBinder.Update();
-}
-```
-- Done. You're all set and can use the KeyBinder tool.
-- See examples of use [here](#examples)
+#### Content 
+  - **[Documentation](#documentation-content)**  
+  - **[Examples & Guide](#examples-and-guide)**
 
-# Examples
-Do what the [Setup](#setup) section says first if you want these examples to work
-- Let's say you have a KeyCode variable for the Jump action in your game.  
-And you check if this KeyCode is pressed, and if it is, your character jumps.  
-Now you want to let the player choose a key for Jump.
-  - Create a method that takes a KeyCode and assigns it to the Jump key.
-  - Now create a Bind method, that'll start checking for the player input.
- 
-  ```csharp
-  KeyBinder keyBinder = new KeyBinder();
-  KeyCode jumpKey;
-  
-  // binds a given KeyCode to the Jump Key
-  void BindToJump(KeyCode key)
-  {
-    jumpKey = key;
-  }
-  
-  // when called, it'll assign the next pressed key to the jumpKey variable
-  void CheckForInput()
-  {
-    keyBinder.InputCheckingBeginSingle(BindToJump);
-  }
-  
-  void Update()
-  {
-    keyBinder.Update();
-    if (Input.GetKeyDown(jumpKey))
-    {
-      Jump();
-    }
-  }
-  ```
-- Let's say you want every time the player presses a button, to display its name.
-  - Create a variable for the text component.
-  - Create a method that takes a KeyCode and prints it to the text component.
-  - Create a method that should start checking for input.
-  - Create a method that should stop checking for input.
-  ```csharp
-  KeyBinder keyBinder = new KeyBinder();
-  public Text textComponent;
-  
-  // displays the name of a given KeyCode the text component
-  void ShowKeyOnScreen(KeyCode key)
-  {
-    textComponent.text = key.ToString();
-  }
-  
-  // when called, it'll start checking for input
-  void StartCheckForInput()
-  {
-    // It'll endlessly call the method "ShowKeyOnScreen" every time the player presses a key.
-    // To stop it, you should call the method InputCheckingStop inside the KeyBinder
-    
-    keyBinder.InputCheckingBeginContinuous(ShowKeyOnScreen);
-  }
-  
-  // when called, it'll stop checking for input
-  void StopCheckingForInput()
-  {
-    keyBinder.InputCheckingStop();
-  }
-  
-  void Update()
-  {
-    keyBinder.Update();
-  }
-  ```
+---
+### Importing
+[**Click here to download**](https://github.com/jozzzzep/KeyBinder/raw/main/packages/KeyBinder.unitypackage), or go to the packages folder of the repository and download the package file.  
+Then import the package directly to your project like any other Unity package.  
+This is he fastest and easiest way.  
 
-# Input Filtering System
-  - There's a **list** of "valid keys" inside a **KeyBinder** object
-  - If the **list's empty**, the input filtering will **not work** (Every key the user will press will be valid)
-  - If the filtering is **working** it'll return the received key **only if** it is **inside that list**
-  - You can **add keys** or **remove keys** from the list with these methods:
-  ```csharp
-  InputFilteringAdd (KeyCode)
-  InputFilteringAdd (KeyCode[])
-  InputFilteringAdd (List<KeyCode>)
-  
-  InputFilteringRemove (KeyCode)
-  InputFilteringRemove (KeyCode[])
-  InputFilteringRemove (List<KeyCode>)
-  
-  InputFilteringRemoveAll()
-  ```
-  - You can also add them upon **initialization** with **constructors**
-  ```csharp
-  // No input, empty list, no filtering
-  KeyBinder keyBinder = new KeyBinder();
-  
-  // Adds the key from the array you entered to the "valid keys list"
-  KeyBinder keyBinder = new KeyBinder(KeyCode[]);
-  
-  // Adds the key from the list you entered to the "valid keys list"
-  KeyBinder keyBinder = new KeyBinder(List<KeyCode>); 
-  ```
-  - Array of keys example:
-  ```csharp
-  KeyCode[] keysArray =
-  {
-    KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F,
-    KeyCode.G, KeyCode.H, KeyCode.I
-  }
-  KeyBinder keyBinder = new KeyBinder(keysArray); // initialized with input filtering
-  ```
-
-# Documentations
+---
+### Documentation Content:
+![img](https://i.imgur.com/swFyjTR.png)
 
   - [KeyDetector](#keydetector)
-  - [InputFilter](#global-audio-player)
-  - [IInputFIlter](#global-audio-player-link)
+  - [Input Filtering](#input-filtering)
+    - [**InputFilter** class members](#inputfilter-class-members)
+    - [Filtering Methods](#filtering-method)
+    - [Filtering Guide](#input-filter-usage-examples)
+    - [**Advanced Filtering Guide**](#advanced-filtering-guide)
+      - [Filter Presets](#iinputfilterpreset)
+      - [Advanced Filtering Examples](#advanced-filtering-examples)
 
 ## KeyDetector
 The main class of the KeyBinder tool, used for detecting when a user/player presses a key.
@@ -196,8 +92,8 @@ The main class of the KeyBinder tool, used for detecting when a user/player pres
   Disables input filtering  
   Sets the InputFilter of the detector to an empty filter
 
-## InputFilter
-A class the KeyDetector uses to filter input.  
+# Input Filtering
+For input filtering there is a class named **InputFilter**, a class the KeyDetector uses to filter input.  
 That means that you can prevent the KeyDetector from detecting certain keys  
 The KeyDetector has an empty inactive InputFilter by default (not filtering).  
 
@@ -207,7 +103,7 @@ The best practice it to do it inside the **Start()** or **Awake()** methods.
 See **[Examples](#input-filter-usage-examples)** 
 
 
-- Properties
+### InputFilter class members:
   - ``Keys``  
    An array of KeyCode, containing the keys the filter is using for filtering  
    If null/empty, the filter is inactive - see bellow
@@ -223,13 +119,13 @@ See **[Examples](#input-filter-usage-examples)**
   Can be either **Whitelist** or **Blacklist** - see bellow
 
   ### Filtering Method
-  The key will be validated by the filter only if:
-    - Whitelist   - it is inside the list of keys of the filter
+  The key will be validated by the filter only if:  
+    - Whitelist   - it is inside the list of keys of the filter  
     - Blacklist   - it is not inside the list of keys of the filter
      
     
 
-### Input Filter Usage Examples
+### Input Filter Usage Guide
 Lets say you want the KeyDetector to only detect the keys:  
 **A, X, Q, Right Mouse Click, Left Mouse Click**  
 You can do it like this:
@@ -270,8 +166,8 @@ You can call the constructor without specifing the method. Like so:
 ```csharp
 InputFilter inputFilter = new InputFilter(keysToFilter);
 ```
----
-### Advanced Filtering Guide
+
+## Advanced Filtering Guide
 Altough it is more advanced, and may look a bit complex -  
 It is recommended to use input filter presets instead of creating a new InputFilter with a constructor.  
 This way is a lot more professional and organized.  
@@ -290,10 +186,10 @@ Just create a class and implemet these members:
   The filtering method see [here](#filtering-method)
 
 ---
-### Advanced Examples
+### Advanced Filtering Examples
 Lets say you want the KeyDetector to only detect the keys:  
 A, X, Q, Right Mouse Click, Left Mouse Click  
-First create a new class for the InputFilterPreset:  
+First open a new file and create a new class for the InputFilterPreset:  
 ```csharp
 using UnityEngine;
 using KeyBinder;
@@ -315,6 +211,7 @@ public class InputFilterPresetExample : IInputFilterPreset
     public InputFilter.Method FilteringMethod => InputFilter.Method.Whitelist;
 }
 ```
+
 ---
 Now, you just need to call the method **SetInputFilter** in **Start()** or **Awake()** like so:
 ```csharp
@@ -324,4 +221,116 @@ Start()
     KeyDetector.SetInputFilter(new InputFilterPresetExample());
 }
 ```
+Done! Now your KeyDetector uses a filter based on the preset class you created.
+
+### Naming a filter preset
+Name the class of the preset by starting with **"InputFilterPreset"** and then add anything you want  
+In this case I added **"Example"** and named it **"InputFilterPresetExample"**
+  
+
+
+# Examples and Guide
+
+This tool can be used in many ways.  
+Here are some examples:  
+## Example #1
+You can can check which key the player/user pressed recently.  
+To to that, turn on input checking in the KeyDetector class.  
+After checking, you can get the key that was pressed from the property "LatestKey"  
+You can write the key name to the console like so:  
+```csharp
+using KeyBinder; // important to use the KeyBinder namespace
+using UnityEngine;
+
+public class ExampleDebugScript : MonoBehaviour
+{
+    void Start()
+    {
+        KeyDetector.InputCheckSetActive(true); // turns on input checking
+    }
+
+    void Update()
+    {
+        Debug.Log(KeyDetector.LatestKey); // logs to the console the latest pressed key
+    }
+}
+```
+
+### Improve Efficiency
+You can make it that it logs the key every time the detector detects a new key  
+Instead of updating every frame the latest key.  
+Do this inside the class ( no need for **Update()** ):
+
+```csharp
+void Start()
+{
+    KeyDetector.InputCheckSetActive(true); // turns on input checking
+
+    // adds the method "DebugKey" to the event "KeyReceived"
+    // it will call the method "DebugKey" every time a new key is detected
+    KeyDetector.KeyReceived += DebugKey; 
+}
+
+void DebugKey(KeyCode keyCode)
+{
+    Debug.Log(KeyDetector.LatestKey); // logs to the console the latest pressed key
+}
+```
+
+## Example #2
+Let's say you have a game that uses a KeyCode variable for the shoot key.  
+Whenever the player presses the shoot key, the game will shoot a bullet.  
+And by default the shoot key is the key **X**:
+
+```csharp
+KeyCode shootKey = KeyCode.X;
+
+void Update()
+{
+    if (Input.GetKeyDown(shootKey))
+    {
+        Shoot()
+    }
+}
+
+void Shoot()
+{
+    // shooting behavior
+}
+
+```
+
+Now you want to let the player choose the key he wants to use for shooting.  
+To do that add a method that sets the "shootKey" variable to a new KeyCode.
+
+```csharp
+void SetShootKey(KeyCode key)
+{
+    shootKey = key;
+}
+```
+Add the namespace "KeyBinder" at the top of the script.
+
+```csharp
+using KeyBinder;
+```
+
+You already have a method for setting the keybind of the shoot key.  
+Nowreate a new method named BindShootKey().  
+Inside, call the function "InputCheckOnce" and pass the method SetShootKey as a parameter.
+
+```csharp
+void BindShootKey()
+{
+    KeyDetector.InputCheckOnce(SetShootKey);
+}
+```
+Now call this method every time you want the player to change the key for shooting.  
+It will wait until a key is pressed, and will call the function "SetShootKey" with the new key.  
+It will also automatically stops checking for input after the key is pressed.  
+So you don't need to worry about stoping the input checking manually.  
+
+*You can also make the "BindShootKey" method - public, to assign it to a button in the UI.*
+
+The KeyDetector also supports InputFiltering read about it [here](#input-filtering)
 
