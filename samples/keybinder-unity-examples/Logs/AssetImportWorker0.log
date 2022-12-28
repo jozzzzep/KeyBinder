@@ -1010,3 +1010,27 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 242.810138 seconds.
+  path: Assets/KeyBinder/KeyDetector.cs
+  artifactKey: Guid(91dd1653006fe3b4ba3ab61fee8ef529) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/KeyBinder/KeyDetector.cs using Guid(91dd1653006fe3b4ba3ab61fee8ef529) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffdff8cf05bab947ce1729688734311d') in 0.004296 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000936 seconds.
+  path: Assets/KeyBinder/InputFilter.cs
+  artifactKey: Guid(3364bf078bbb3f54caecbcaff71b0832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/KeyBinder/InputFilter.cs using Guid(3364bf078bbb3f54caecbcaff71b0832) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78022ce8d973cf27c9002ec8a4cea43f') in 0.001093 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000666 seconds.
+  path: Assets/KeyBinder/Extensions.cs
+  artifactKey: Guid(5e9cf6ede0c02c34faa54634947fead1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/KeyBinder/Extensions.cs using Guid(5e9cf6ede0c02c34faa54634947fead1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c9265ffd979a8fdde91370da48bc9f5') in 0.001186 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000869 seconds.
+  path: Assets/KeyBinder/IInputFilterPreset.cs
+  artifactKey: Guid(cd5f0f9747ef3524e926068714f9a134) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/KeyBinder/IInputFilterPreset.cs using Guid(cd5f0f9747ef3524e926068714f9a134) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '487a24b3123c814ebfec83ea2eeccc00') in 0.001019 seconds 
